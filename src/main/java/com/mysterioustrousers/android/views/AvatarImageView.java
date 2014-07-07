@@ -41,7 +41,7 @@ public class AvatarImageView extends View {
 
 
   private void init(AttributeSet attrs, int defStyle) {
-    _image = null;
+    this.setImage(null);
 
 
     final TypedArray styledAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.AvatarImageView, defStyle, 0);
