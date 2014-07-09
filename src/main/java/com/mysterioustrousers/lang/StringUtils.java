@@ -85,4 +85,14 @@ public class StringUtils {
   public static boolean isNullOrWhiteSpace(String str) {
     return (StringUtils.isNullOrEmpty(str) || org.apache.commons.lang3.StringUtils.isWhitespace(str));
   }
+
+
+  public static String trimIfNotNull(CharSequence charSeq) {
+    return StringUtils.trimIfNotNull(charSeq.toString());
+  }
+
+
+  public static String trimIfNotNull(String str) {
+    return (str == null) ? null : str.trim();
+  }
 }
