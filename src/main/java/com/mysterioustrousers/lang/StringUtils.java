@@ -4,10 +4,6 @@ package com.mysterioustrousers.lang;
 
 public class StringUtils {
 
-  public static final String EMPTY = "";
-  public static final String SPACE = " ";
-
-
 
   public static String defaultIfNullOrEmpty(String str, CharSequence defaultCharSeq) {
     return StringUtils.defaultIfNullOrEmpty(str, ((defaultCharSeq == null) ? null : defaultCharSeq.toString()));
