@@ -2,10 +2,20 @@
 ### Project Ignores                              ###
 ### -------------------------------------------- ###
 
-.gradle/
-build/
-/*.iml
-!/mt-android-commons.iml
+## Build Files/Folders
+[Bb]in/
+[Bb]uild/
+[Gg]en/
+[Oo]bj/
+[Oo]ut/
+[Pp]roduction/
+[Tt]arget/
+
+*.ap_
+*.apk
+*.class
+*.ear
+*.war
 
 
 
@@ -13,9 +23,18 @@ build/
 ### IDEs & Editors Ignores                       ###
 ### -------------------------------------------- ###
 
-## Android Studio
-/.idea/workspace.xml
-/local.properties
+## JetBeans IDEs
+.idea/
+.gradle/
+
+*.iml
+*.ipr
+*.iws
+*.swp
+local.properties
+
+## Eclipse
+.settings/
 
 ## Sublime Text
 /*.sublime*
