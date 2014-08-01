@@ -34,5 +34,6 @@ android {
 dependencies {
   compile 'commons-validator:commons-validator:1.+@jar'
   compile 'org.apache.commons:commons-lang3:3.+@jar'
+  compile 'com.timgroup:jgravatar:1.0@jar'
   compile fileTree(dir: 'libs', include: ['*.jar'])
 }
