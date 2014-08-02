@@ -5,9 +5,10 @@ package com.mysterioustrousers.net;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.mysterioustrousers.lang.StringUtils;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
+
+import org.apache.commons.lang3.StringUtils;
 
 
 
@@ -64,7 +65,7 @@ public final class GravatarFactory {
 
 
   public URL getGravatarURL(String email, com.mysterioustrousers.net.GravatarDefaultImage defaultImage) throws MalformedURLException {
-    if (StringUtils.isNullOrWhiteSpace(email)) {
+    if (StringUtils.isBlank(email)) {
       return null;
     }
 

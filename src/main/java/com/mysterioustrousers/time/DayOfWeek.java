@@ -2,9 +2,8 @@ package com.mysterioustrousers.time;
 
 
 
-import com.mysterioustrousers.lang.StringUtils;
-
 import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.IntegerValidator;
 
 
@@ -33,7 +32,7 @@ public enum DayOfWeek {
 
 
   public static DayOfWeek parseString(String str) {
-    if (StringUtils.isNullOrWhiteSpace(str)) {
+    if (StringUtils.isBlank(str)) {
       return null;
     }
     return EnumUtils.getEnum(DayOfWeek.class, str.trim().toUpperCase());
