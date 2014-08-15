@@ -35,6 +35,7 @@ android {
 
 
 dependencies {
+  compile 'com.google.code.gson:gson:2.2.4@jar'
   compile 'commons-validator:commons-validator:1.4.0@jar'
   compile 'org.apache.commons:commons-lang3:3.3.2@jar'
   compile 'com.timgroup:jgravatar:1.0@jar'
