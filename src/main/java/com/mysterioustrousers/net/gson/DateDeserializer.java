@@ -42,6 +42,7 @@ public class DateDeserializer implements JsonDeserializer<Date> {
 
     try {
       return DateUtils.parseDate(dateString,
+                                 "yyyy-MM-dd HH:mm:ss",
                                  isoDateTimeFormatFull,
                                  isoDateTimeFormatFull + "z",
                                  isoDateTimeFormatFull + "zzzz",
