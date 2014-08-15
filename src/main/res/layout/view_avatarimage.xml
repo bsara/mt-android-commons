@@ -4,8 +4,8 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
     <com.mysterioustrousers.android.views.AvatarImageView
-      android:background="@android:color/transparent"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@android:color/transparent"
       app:avatarImage="@drawable/ic_anonymous" />
 </FrameLayout>

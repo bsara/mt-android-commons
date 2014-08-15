@@ -106,13 +106,13 @@ public class AvatarImageView extends View {
   }
 
 
-  public void setImage(Drawable image) {
-    _image = image;
+  public void setImage(int resourceId) {
+    _image = this.getResources().getDrawable(resourceId);
   }
 
 
-  public void setImage(int resourceId) {
-    _image = this.getResources().getDrawable(resourceId);
+  public void setImage(Drawable image) {
+    _image = image;
   }
 
 
