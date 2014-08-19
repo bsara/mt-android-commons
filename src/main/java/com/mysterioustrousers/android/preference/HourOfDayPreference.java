@@ -5,7 +5,6 @@ package com.mysterioustrousers.android.preference;
 import java.util.Calendar;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,6 +21,8 @@ public class HourOfDayPreference extends StandardDialogPreference {
 
   private NumberPicker _hourView;
   private NumberPicker _ampmView;
+
+  private int _value;
 
 
 
@@ -66,18 +67,37 @@ public class HourOfDayPreference extends StandardDialogPreference {
 
     _hourView = (NumberPicker)view.findViewById(R.id.customPref_hourOfDay_hour);
     _hourView.setMinValue(0);
-    _hourView.setMaxValue(isUsing24HourFormat ? 24 : 12);
+    _hourView.setMaxValue(isUsing24HourFormat ? 23 : 11);
     _hourView.setDisplayedValues(_hourStrings);
 
     _ampmView = (NumberPicker)view.findViewById(R.id.customPref_hourOfDay_ampm);
-    if (!isUsing24HourFormat) {
+    if (isUsing24HourFormat) {
+      _ampmView.setVisibility(View.GONE);
+    } else {
       _ampmView.setVisibility(View.VISIBLE);
       _ampmView.setMinValue(0);
       _ampmView.setMaxValue(1);
       _ampmView.setDisplayedValues(_ampmStrings);
-    } else {
-      _ampmView.setVisibility(View.GONE);
+
+      if (_value > 12) {
+        _hourView.setValue(_value - 12);
+        _ampmView.setValue(1);
+        return;
+      }
+      _ampmView.setValue(0);
     }
+    _hourView.setValue(_value);
+  }
+
+
+  @Override
+  protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+    if (restorePersistedValue) {
+      _value = this.getPersistedInt(18);
+      return;
+    }
+    _value = 18;
+    this.persistInt(_value);
   }
 
 
@@ -96,17 +116,15 @@ public class HourOfDayPreference extends StandardDialogPreference {
       calendar.set(Calendar.HOUR_OF_DAY, hour);
       calendar.set(Calendar.MINUTE, 0);
 
-      if (callChangeListener(calendar.getTimeInMillis())) {
-        this.persistString(Long.toString(calendar.getTimeInMillis()));
+      // TODO: convert to UTC
+
+      int utcHour = calendar.get(Calendar.HOUR_OF_DAY);
+
+      if (this.callChangeListener(utcHour)) {
+        this.persistInt(utcHour);
         this.notifyChanged();
       }
     }
-  }
-
-
-  @Override
-  protected Object onGetDefaultValue(TypedArray a, int index) {
-    return (a.getString(index));
   }
 
 
@@ -120,12 +138,12 @@ public class HourOfDayPreference extends StandardDialogPreference {
   @Override
   public CharSequence getSummary() {
     if (DateFormat.is24HourFormat(this.getContext())) {
-      return _hourStrings[ _hourView.getValue() ];
+      return _hourStrings[ _value ];
     }
     if (_hourView.getValue() > 12) {
-      return String.format("%s %s", _hourStrings[ _hourView.getValue() - 12 ], _ampmStrings[ 1 ]);
+      return String.format("%s %s", _hourStrings[ _value - 12 ], _ampmStrings[ 1 ]);
     }
-    return String.format("%s %s", _hourStrings[ _hourView.getValue() ], _ampmStrings[ 0 ]);
+    return String.format("%s %s", _hourStrings[ _value ], _ampmStrings[ 0 ]);
   }
 
 

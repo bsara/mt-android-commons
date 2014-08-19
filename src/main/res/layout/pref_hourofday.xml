@@ -8,9 +8,11 @@
   <NumberPicker
     android:id="@+id/customPref_hourOfDay_hour"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp" />
   <NumberPicker
     android:id="@+id/customPref_hourOfDay_ampm"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp" />
 </LinearLayout>
