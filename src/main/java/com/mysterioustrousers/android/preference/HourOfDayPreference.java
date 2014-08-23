@@ -2,9 +2,8 @@ package com.mysterioustrousers.android.preference;
 
 
 
-import java.util.Calendar;
-
 import android.content.Context;
+import android.preference.DialogPreference;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,7 +13,7 @@ import com.mysterioustrousers.android.R;
 
 
 
-public class HourOfDayPreference extends StandardDialogPreference {
+public class HourOfDayPreference extends DialogPreference {
 
   private String[] _hourStrings;
   private String[] _ampmStrings;
@@ -106,24 +105,13 @@ public class HourOfDayPreference extends StandardDialogPreference {
     super.onDialogClosed(positiveResult);
 
     if (positiveResult) {
-      Calendar calendar = Calendar.getInstance();
-
       int hour = _hourView.getValue();
-      if (DateFormat.is24HourFormat(this.getContext()) && _ampmView.getValue() == 1) {
+
+      if (!DateFormat.is24HourFormat(this.getContext()) && _ampmView.getValue() == 1) {
         hour += 12;
       }
 
-      calendar.set(Calendar.HOUR_OF_DAY, hour);
-      calendar.set(Calendar.MINUTE, 0);
-
-      // TODO: convert to UTC
-
-      int utcHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-      if (this.callChangeListener(utcHour)) {
-        this.persistInt(utcHour);
-        this.notifyChanged();
-      }
+      this.persistInt(hour);
     }
   }
 
@@ -140,7 +128,7 @@ public class HourOfDayPreference extends StandardDialogPreference {
     if (DateFormat.is24HourFormat(this.getContext())) {
       return _hourStrings[ _value ];
     }
-    if (_hourView.getValue() > 12) {
+    if (_value > 12) {
       return String.format("%s %s", _hourStrings[ _value - 12 ], _ampmStrings[ 1 ]);
     }
     return String.format("%s %s", _hourStrings[ _value ], _ampmStrings[ 0 ]);
