@@ -3,18 +3,20 @@ package com.mysterioustrousers.android.preference;
 
 
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
+
+import com.mysterioustrousers.android.R;
+
+import org.apache.commons.lang3.StringUtils;
 
 
 
 public class TimeZonePreference extends ListPreference {
-
-  private String _timeZoneId;
 
 
 
@@ -34,17 +36,8 @@ public class TimeZonePreference extends ListPreference {
 
 
   private void init() {
-    final Locale currentLocale = this.getContext().getResources().getConfiguration().locale;
-
-    final String[] timeZoneIds = TimeZone.getAvailableIDs();
-    String[] timeZoneDisplayNames = new String[ timeZoneIds.length ];
-
-    for (int i = 0; i < timeZoneIds.length; i++) {
-      timeZoneDisplayNames[ i ] = TimeZone.getTimeZone(timeZoneIds[ i ]).getDisplayName(currentLocale);
-    }
-
-    this.setEntries(timeZoneDisplayNames);
-    this.setEntryValues(timeZoneIds);
+    this.setEntries(TimeZone.getAvailableIDs());
+    this.setEntryValues(this.getEntries());
   }
 
 
@@ -53,10 +46,13 @@ public class TimeZonePreference extends ListPreference {
 
 
   @Override
-  protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-    if (defaultValue == null) {
-      defaultValue = Calendar.getInstance().getTimeZone().getID();
-    }
-    super.onSetInitialValue(restoreValue, defaultValue);
+  protected Object onGetDefaultValue(TypedArray a, int index) {
+    return StringUtils.defaultIfBlank(a.getString(index), Calendar.getInstance().getTimeZone().getID());
+  }
+
+
+  @Override
+  public CharSequence getSummary() {
+    return StringUtils.defaultIfBlank(this.getValue(), this.getContext().getResources().getString(R.string.customPref_timeZone_item_none));
   }
 }

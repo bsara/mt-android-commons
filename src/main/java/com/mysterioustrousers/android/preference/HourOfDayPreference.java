@@ -29,7 +29,7 @@ public class HourOfDayPreference extends DialogPreference {
 
 
   public HourOfDayPreference(Context context, AttributeSet attrs) {
-    super(context, attrs, 0);
+    super(context, attrs);
     this.init();
   }
 

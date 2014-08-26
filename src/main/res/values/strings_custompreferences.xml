@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="customPref_dialog_button_negative">@android:string/cancel</string>
+  <string name="customPref_dialog_button_positive">@android:string/ok</string>
+
+
+
   <string-array name="customPref_hourOfDay_hours_12">
     <item>12:00</item>
     <item>1:00</item>
@@ -44,4 +49,8 @@
     <item>AM</item>
     <item>PM</item>
   </string-array>
+
+
+
+  <string name="customPref_timeZone_item_none">None</string>
 </resources>
