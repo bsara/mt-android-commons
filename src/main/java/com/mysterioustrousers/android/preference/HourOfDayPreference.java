@@ -128,7 +128,7 @@ public class HourOfDayPreference extends DialogPreference {
     if (DateFormat.is24HourFormat(this.getContext())) {
       return _hourStrings[ _value ];
     }
-    if (_value > 12) {
+    if (_value > 11) {
       return String.format("%s %s", _hourStrings[ _value - 12 ], _ampmStrings[ 1 ]);
     }
     return String.format("%s %s", _hourStrings[ _value ], _ampmStrings[ 0 ]);
