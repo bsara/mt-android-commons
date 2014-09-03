@@ -21,7 +21,8 @@ public class HourOfDayPreference extends DialogPreference {
   private NumberPicker _hourView;
   private NumberPicker _ampmView;
 
-  private int _value;
+  private boolean _isValueSet;
+  private int     _value;
 
 
 
@@ -46,6 +47,9 @@ public class HourOfDayPreference extends DialogPreference {
 
     _hourView = null;
     _ampmView = null;
+
+    _isValueSet = false;
+    _value = 0;
 
     this.setDialogLayoutResource(R.layout.pref_hourofday);
   }
@@ -91,12 +95,16 @@ public class HourOfDayPreference extends DialogPreference {
 
   @Override
   protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+    if (defaultValue == null || !(defaultValue instanceof Integer)) {
+      defaultValue = 0;
+    }
+
     if (restorePersistedValue) {
-      _value = this.getPersistedInt(18);
+      _value = this.getPersistedInt((Integer)defaultValue);
+      _isValueSet = true;
       return;
     }
-    _value = 18;
-    this.persistInt(_value);
+    this.setValue((Integer)defaultValue);
   }
 
 
@@ -111,7 +119,9 @@ public class HourOfDayPreference extends DialogPreference {
         hour += 12;
       }
 
-      this.persistInt(hour);
+      if (this.callChangeListener(hour)) {
+        this.setValue(hour);
+      }
     }
   }
 
@@ -121,6 +131,21 @@ public class HourOfDayPreference extends DialogPreference {
 
 
   // region Getters/Setters
+
+
+  private void setValue(int newValue) {
+    final boolean wasChanged = (newValue != _value);
+    if (wasChanged || !_isValueSet) {
+      _value = newValue;
+      _isValueSet = true;
+
+      this.persistInt(_value);
+
+      if (wasChanged) {
+        this.notifyChanged();
+      }
+    }
+  }
 
 
   @Override

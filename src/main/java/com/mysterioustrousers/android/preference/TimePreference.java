@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.preference.DialogPreference;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,7 +16,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 
 
-public class TimePreference extends StandardDialogPreference {
+public class TimePreference extends DialogPreference {
 
   private TimePicker _timeView;
   private Calendar   _calendar;
@@ -25,14 +26,14 @@ public class TimePreference extends StandardDialogPreference {
   // region Constructors
 
 
-  public TimePreference(Context ctxt, AttributeSet attrs) {
-    super(ctxt, attrs);
+  public TimePreference(Context context, AttributeSet attrs) {
+    super(context, attrs);
     this.init();
   }
 
 
-  public TimePreference(Context ctxt, AttributeSet attrs, int defStyle) {
-    super(ctxt, attrs, defStyle);
+  public TimePreference(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
     this.init();
   }
 
