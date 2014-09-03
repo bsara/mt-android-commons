@@ -133,7 +133,12 @@ public class HourOfDayPreference extends DialogPreference {
   // region Getters/Setters
 
 
-  private void setValue(int newValue) {
+  public int getValue() {
+    return _value;
+  }
+
+
+  public void setValue(int newValue) {
     final boolean wasChanged = (newValue != _value);
     if (wasChanged || !_isValueSet) {
       _value = newValue;
