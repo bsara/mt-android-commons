@@ -21,19 +21,6 @@ public final class GravatarFactory {
 
 
   private static GravatarFactory s_instance;
-  private        Gravatar        _gravatar;
-
-
-  // endregion
-  private GravatarDefaultImage _currentDefaultImage;
-
-
-  private GravatarFactory() {
-    super();
-
-    _gravatar = null;
-    _currentDefaultImage = Gravatar.DEFAULT_DEFAULT_IMAGE;
-  }
 
 
   /**
@@ -44,6 +31,23 @@ public final class GravatarFactory {
       s_instance = new GravatarFactory();
     }
     return s_instance;
+  }
+
+
+  // endregion
+
+
+
+  private Gravatar _gravatar;
+  private GravatarDefaultImage _currentDefaultImage;
+
+
+
+  private GravatarFactory() {
+    super();
+
+    _gravatar = null;
+    _currentDefaultImage = Gravatar.DEFAULT_DEFAULT_IMAGE;
   }
 
 
