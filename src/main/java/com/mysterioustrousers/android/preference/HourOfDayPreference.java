@@ -140,6 +140,7 @@ public class HourOfDayPreference extends DialogPreference {
 
   public void setValue(int newValue) {
     final boolean wasChanged = (newValue != _value);
+
     if (wasChanged || !_isValueSet) {
       _value = newValue;
       _isValueSet = true;

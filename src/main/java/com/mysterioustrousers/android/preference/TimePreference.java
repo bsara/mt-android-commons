@@ -5,7 +5,6 @@ package com.mysterioustrousers.android.preference;
 import java.util.Calendar;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
@@ -19,7 +18,9 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 public class TimePreference extends DialogPreference {
 
   private TimePicker _timeView;
-  private Calendar   _calendar;
+
+  private Calendar _value;
+  private boolean  _isValueSet;
 
 
 
@@ -39,7 +40,8 @@ public class TimePreference extends DialogPreference {
 
 
   private void init() {
-    _calendar = Calendar.getInstance();
+    _isValueSet = false;
+    _value = null;
   }
 
 
@@ -52,8 +54,8 @@ public class TimePreference extends DialogPreference {
 
   @Override
   protected View onCreateDialogView() {
-    _timeView = new TimePicker(getContext());
-    _timeView.setIs24HourView(DateFormat.is24HourFormat(getContext()));
+    _timeView = new TimePicker(this.getContext());
+    _timeView.setIs24HourView(DateFormat.is24HourFormat(this.getContext()));
 
     return _timeView;
   }
@@ -61,10 +63,39 @@ public class TimePreference extends DialogPreference {
 
 
   @Override
-  protected void onBindDialogView(View v) {
-    super.onBindDialogView(v);
-    _timeView.setCurrentHour(_calendar.get(Calendar.HOUR_OF_DAY));
-    //picker.setCurrentMinute(calendar.get(Calendar.MINUTE));
+  protected void onBindDialogView(View view) {
+    super.onBindDialogView(view);
+
+    _timeView.setCurrentHour(_value.get(Calendar.HOUR_OF_DAY));
+    _timeView.setCurrentMinute(_value.get(Calendar.MINUTE));
+  }
+
+
+  @Override
+  protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
+    if (defaultValue == null || !(defaultValue instanceof Long)) {
+      defaultValue = null;
+    }
+
+
+    if (restorePersistedValue) {
+      _value = Calendar.getInstance();
+      _value.setTimeInMillis(this.getPersistedLong((Long)defaultValue));
+      _isValueSet = true;
+      return;
+    }
+
+
+    Calendar newValue = Calendar.getInstance();
+
+    if (defaultValue == null) {
+      newValue.set(Calendar.HOUR_OF_DAY, 12);
+      newValue.set(Calendar.MINUTE, 0);
+    } else {
+      newValue.setTimeInMillis((Long)defaultValue);
+    }
+
+    this.setValue(_value);
   }
 
 
@@ -73,13 +104,13 @@ public class TimePreference extends DialogPreference {
     super.onDialogClosed(positiveResult);
 
     if (positiveResult) {
-      _calendar.set(Calendar.HOUR_OF_DAY, _timeView.getCurrentHour());
-      _calendar.set(Calendar.MINUTE, _timeView.getCurrentMinute());
+      Calendar newValue = Calendar.getInstance();
 
-      this.setSummary(getSummary());
-      if (callChangeListener(_calendar.getTimeInMillis())) {
-        this.persistString(Long.toString(_calendar.getTimeInMillis()));
-        this.notifyChanged();
+      newValue.set(Calendar.HOUR_OF_DAY, _timeView.getCurrentHour());
+      newValue.set(Calendar.MINUTE, _timeView.getCurrentMinute());
+
+      if (this.callChangeListener(newValue)) {
+        this.setValue(newValue);
       }
     }
   }
@@ -92,15 +123,30 @@ public class TimePreference extends DialogPreference {
   // region Getters/Setters
 
 
-  @Override
-  protected Object onGetDefaultValue(TypedArray a, int index) {
-    return a.getString(index);
+  public Calendar getValue() {
+    return _value;
+  }
+
+
+  public void setValue(Calendar newValue) {
+    final boolean wasChanged = !newValue.equals(_value);
+
+    if (wasChanged || !_isValueSet) {
+      _value = newValue;
+      _isValueSet = true;
+
+      this.persistLong(_value.getTimeInMillis());
+
+      if (wasChanged) {
+        this.notifyChanged();
+      }
+    }
   }
 
 
   @Override
   public CharSequence getSummary() {
-    return (_calendar == null) ? null : DateFormatUtils.ISO_TIME_FORMAT.format(_calendar);
+    return (_value == null) ? null : DateFormatUtils.ISO_TIME_FORMAT.format(_value);
   }
 
 
