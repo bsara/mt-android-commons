@@ -82,7 +82,7 @@ public class HourOfDayPreference extends DialogPreference {
       _ampmView.setMaxValue(1);
       _ampmView.setDisplayedValues(_ampmStrings);
 
-      if (_value > 12) {
+      if (_value > 11) {
         _hourView.setValue(_value - 12);
         _ampmView.setValue(1);
         return;
