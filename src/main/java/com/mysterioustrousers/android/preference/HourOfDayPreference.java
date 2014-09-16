@@ -69,11 +69,15 @@ public class HourOfDayPreference extends DialogPreference {
     final boolean isUsing24HourFormat = DateFormat.is24HourFormat(this.getContext());
 
     _hourView = (NumberPicker)view.findViewById(R.id.customPref_hourOfDay_hour);
+    _hourView.setSaveFromParentEnabled(false);
+    _hourView.setSaveEnabled(true);
     _hourView.setMinValue(0);
     _hourView.setMaxValue(isUsing24HourFormat ? 23 : 11);
     _hourView.setDisplayedValues(_hourStrings);
 
     _ampmView = (NumberPicker)view.findViewById(R.id.customPref_hourOfDay_ampm);
+    _ampmView.setSaveFromParentEnabled(false);
+    _ampmView.setSaveEnabled(true);
     if (isUsing24HourFormat) {
       _ampmView.setVisibility(View.GONE);
     } else {
