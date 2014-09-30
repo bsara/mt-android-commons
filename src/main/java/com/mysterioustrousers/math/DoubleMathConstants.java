@@ -4,6 +4,9 @@ package com.mysterioustrousers.math;
 
 public class DoubleMathConstants {
 
+  private DoubleMathConstants() {}
+
+
   public static final double TWO_PI    = ((double)Math.PI * (double)2.0);
   public static final double PI_OVER_2 = ((double)Math.PI / (double)2.0);
   public static final double PI_OVER_3 = ((double)Math.PI / (double)3.0);

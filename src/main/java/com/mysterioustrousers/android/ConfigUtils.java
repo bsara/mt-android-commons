@@ -9,6 +9,9 @@ import android.content.res.Configuration;
 
 public final class ConfigUtils {
 
+  private ConfigUtils() {}
+
+
   public static boolean isTablet(Context context) {
     return (ConfigUtils.getScreenSize(context).ordinal() >= ScreenSize.LARGE.ordinal());
   }

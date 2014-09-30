@@ -10,6 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public class InternetUtils {
 
+  private InternetUtils() {}
+
+
   public static boolean isInternetAvailable() {
     return InternetUtils.isURLAvailable("google.com");
   }

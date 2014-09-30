@@ -4,6 +4,9 @@ package com.mysterioustrousers.math;
 
 public class FloatMathConstants {
 
+  private FloatMathConstants() {}
+
+
   public static final float TWO_PI    = ((float)Math.PI * 2.0f);
   public static final float PI_OVER_2 = ((float)Math.PI / 2.0f);
   public static final float PI_OVER_3 = ((float)Math.PI / 3.0f);
