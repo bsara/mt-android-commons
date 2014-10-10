@@ -25,16 +25,14 @@ public class DateDeserializer implements JsonDeserializer<Date> {
       return null;
     }
 
-    String dateString = StringUtils.trim(json.getAsString());
 
+    String dateString = StringUtils.trim(json.getAsString());
     if (StringUtils.isBlank(dateString)) {
       return null;
     }
-
     if (dateString.toUpperCase().equals("NOW")) {
       return new Date();
     }
-
     dateString = dateString.replace("Z", "+00:00");
 
 
