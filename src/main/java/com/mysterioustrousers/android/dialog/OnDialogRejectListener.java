@@ -4,5 +4,5 @@ package com.mysterioustrousers.android.dialog;
 
 public interface OnDialogRejectListener {
 
-  public boolean onReject();
+  public boolean onDialogReject();
 }
